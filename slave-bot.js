@@ -21,7 +21,7 @@ client.on('message', message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
-	const command = args.shift().toLowerCase();
+    const command = args.shift().toLowerCase();
 
     if (command === 'slave') {
         userIDs.forEach(id => {
@@ -30,6 +30,8 @@ client.on('message', message => {
         });
         message.channel.send('Coja slave');
 	} else if(command === 'noslave') {
+        if(userIDs.includes(message.author.id)) return;
+
         userIDs.forEach(id => {
             const user = guild.members.cache.find(m => m.id === id);
             user.roles.remove(role);
